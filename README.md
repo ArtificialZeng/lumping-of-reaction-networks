@@ -128,6 +128,7 @@ If you see printed conditions and/or a reduced model description, your environme
 - `results/`: frozen expected CAS outputs quoted in the manuscript appendices
 - `figures/`: source scripts and generated PDFs for the manuscript figures
 - `notes/`: short SymPy scripts verifying selected mathematical claims in the manuscript (see [section below](#verification-notes))
+- `tools/`: repository-level audit scripts, including a CAS-input checker that does not require Singular or Wolfram/Mathematica
 - `basic_usage.py`: a minimal one-file usage demo
 
 ### Example scripts
@@ -594,14 +595,17 @@ The repository includes lightweight outputs that make the submitted computations
 - `figures/` contains the source files and generated PDFs for the manuscript figures. The Python figure scripts write outputs to `figures/generated/`; the TikZ flowchart can be rebuilt with a LaTeX installation that provides the `standalone` class.
 - `requirements-repro.txt` records the Python package versions used for the final smoke test in this repository. The Section 6 ideal decompositions additionally require Singular; the Wolfram Language scripts require Mathematica/WolframScript.
 
-From a clean checkout, the lightweight verification command is:
+From a clean checkout, the lightweight verification commands are:
 
 ```bash
 pip install -e .[dev]
 python -m pytest -q
+python tools/verify_cas_inputs.py
 ```
 
-The external CAS scripts are intentionally not part of the automated Python test suite.
+The last command independently regenerates the Section 6 polynomial conditions with SymPy, checks the Wolfram Language model definitions, compares the generated conditions with the ideals transcribed in the Singular scripts, and verifies the frozen result-file component counts. It does not require Singular or Wolfram/Mathematica.
+
+The external CAS decomposition scripts are intentionally not part of the automated Python test suite.
 
 ---
 
@@ -625,6 +629,16 @@ independently verify selected mathematical claims of the manuscript:
 
 Both scripts run in a few seconds and print a step-by-step derivation
 suitable for sharing.
+
+The [`tools/`](tools/) folder contains repository-level audit scripts. The most relevant one for the external computer-algebra workflows is:
+
+- `tools/verify_cas_inputs.py` — a SymPy-only audit that rebuilds the self-replication and two-pathway enzyme ideals from `T*DF*B = 0`, checks the corresponding Wolfram Language scripts for the expected vector fields and ansatz matrices, compares the regenerated generators with the `ideal g` declarations in the Singular scripts, verifies the frozen output component counts, and checks the explicit two-pathway Component [6] reduced system. It is a sanity check for the CAS inputs and quoted outputs; it does not independently prove that Singular’s full prime decompositions are complete or minimal.
+
+Run it from the repository root:
+
+```bash
+python tools/verify_cas_inputs.py
+```
 
 ---
 
