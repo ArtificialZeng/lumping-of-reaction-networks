@@ -4,7 +4,7 @@ A Python package for analyzing **exact linear lumping** of parameter-dependent *
 
 This repository accompanies the submitted manuscript:
 
-> **"Lumping of reaction networks: Generic and critical parameters"** *(submitted manuscript)*
+> J. Eilertsen, V. G. Romanovski, S. Schnell, S. Walcher (2026). [Lumping of reaction networks: Generic and critical parameters.](https://arxiv.org/abs/2606.28895) *arXiv*, 606.28895, math.DS.
 
 The software implements the main computational ingredients from the paper:
 
