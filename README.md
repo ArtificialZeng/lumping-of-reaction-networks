@@ -627,8 +627,28 @@ independently verify selected mathematical claims of the manuscript:
   `-(m-1)*rho` diagonal of the intra-block correction matrix that makes
   `y_p` a first integral.
 
-Both scripts run in a few seconds and print a step-by-step derivation
+The two standalone scripts run in a few seconds and print a step-by-step derivation
 suitable for sharing.
+
+- [`notes/example8_stability/`](notes/example8_stability/README.md) — exact
+  verification of the Example 8 transverse Jacobian (arXiv v2, pp.38–39).
+  Direct differentiation gives entry `(2,1)=-k3*c2`, whereas the displayed
+  matrix has `-k2*c2`. The note supplies an exact unstable witness for the
+  literal printed expression and proves that the corrected derivative is
+  Hurwitz for every eight positive fast rates and `c1,c2 >= 0`. Two separate
+  symbolic implementations and four archived ordinary/optimized outputs
+  support a read-only replay. The existing reaction model is unchanged.
+
+From the repository root, run the pinned, self-contained check with:
+
+```bash
+python -m pip install -r notes/example8_stability/requirements.txt
+python -B notes/example8_stability/replay.py
+```
+
+This is a source-specific correction and local stability verification. It
+makes no claim to solve the broader future question on all-time approximation
+errors. See the note's scope and proof for the precise assertions and limits.
 
 The [`tools/`](tools/) folder contains repository-level audit scripts. The most relevant one for the external computer-algebra workflows is:
 
